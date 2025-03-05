@@ -1,0 +1,276 @@
+    1  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+    2  oc whoami 
+    3  oc get oauth 
+    4  oc get oauth/cluster -o yaml  
+    5  htpasswd -c -B -b htpasswd new_admin redhat 
+    6  cat htpasswd 
+    7  htpasswd -c -B -b htpasswd new_developer developer
+    8  cat htpasswd 
+    9  htpasswd -c -B -b htpasswd new_admin redhat 
+   10  htpasswd -b htpasswd new_developer developer
+   11  cat htpasswd 
+   12  oc create secret generic localusers --from-file htpasswd=htpasswd -n openshift-config 
+   13  oc adm policy add-cluster-role-to-user cluster-admin new-admin 
+   14  oc get oauth/cluster -o yaml > oauth.yaml
+   15  vim oauth.yaml
+   16  oc replace -f oauth.yaml
+   17  vim oauth.yaml
+   18  oc replace -f oauth.yaml
+   19  oc get pods -n openshift-authentication
+   20  watch -d oc get pods -n openshift-authentication
+   21  oc get oauth/cluster -o yaml 
+   22  oc get pods -n openshift-authentication
+   23  oc edit oauth/cluster
+   24  oc get secret -n openshift-con
+   25  oc get secret -n openshift-config
+   26  oc get pods -n openshift-authentication
+   27  oc edit oauth/cluster
+   28  oc get pods -n openshift-authentication
+   29  watch -d oc get pods -n openshift-authentication
+   30  oc get pods -n openshift-authentication
+   31  oc edit oauth/cluster
+   32  oc get pods -n openshift-authentication
+   33  watch -d oc get pods -n openshift-authentication
+   34  oc login -u new_admin -p redhat
+   35  oc get nodes 
+   36  oc adm policy add-cluster-role-to-user cluster-admin new_admin 
+   37  oc login -u admin -p redhatocp 
+   38  oc adm policy add-cluster-role-to-user cluster-admin new_admin 
+   39  oc login -u new_admin -p redhat
+   40  oc get nodes 
+   41  oc login -u new_developer -p developer 
+   42  oc get nodes
+   43  oc login -u new_admin -p redhat
+   44  oc get users
+   45  oc get identities.user.openshift.io 
+   46  oc extract secret/localusers -n openshift-config --to . --confirm 
+   47  cat htpasswd 
+   48  htpasswd  -b htpasswd manager redhat 
+   49  cat htpasswd 
+   50  oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config
+   51  watch oc get all -n openshift-authentication
+   52  oc login -u manager -p redhat 
+   53  oc new-project auth-providers
+   54  oc login -u new_developer -p developer 
+   55  oc delete project auth-providers
+   56  oc login -u new_admin -p redhat 
+   57  oc extract secret/localusers -n openshift-config --to . --confirm 
+   58  cat htpasswd 
+   59  MANAGER_PASSWD="$(openssl rand -hex 15)"
+   60  htpasswd -b htpasswd manager ${MANAGER_PASSWD}
+   61  cat htpasswd 
+   62  oc set data secret/loccalusers --from-file htpasswd=htpasswd -n openshift-config 
+   63  oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config 
+   64  watch oc get all -n openshift-authentication
+   65  oc login -u manager -p ${MANAGER_PASSWD}
+   66  oc login -u new_admin -p redhat 
+   67  oc extract secret/localusers -n openshift-config --to . --confirm 
+   68  cat htpasswd 
+   69  htpasswd -D htpasswd manager 
+   70  cat htpasswd 
+   71  oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config
+   72  watch -d oc get pods -n openshift-authentication
+   73  oc login -u manager -p ${MANAGER_PASSWD}
+   74  oc login -u new_admin -p redhat
+   75  oc delete identities.user.openshift.io "myusers:manager"
+   76  oc delete user manager
+   77  oc get users 
+   78  oc get identity
+   79  oc extract secret/localusers -n openshift-config --to . 
+   80  oc extract secret/localusers -n openshift-config --to /tmp/ 
+   81  cat /tmp/htpasswd 
+   82  oc login -u admin -p redhatocp 
+   83  oc delete project auth-providers 
+   84  oc edit oauth
+   85  watch -d oc get pods -n openshift-authentication
+   86  oc get pods -n openshift-authentication
+   87  oc delete secret/localusers -n openshift-config
+   88  oc delete identities.user.openshift.io --all
+   89  oc delete user --all
+   90  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+   91  oc get clusterrolebinding -o wide | grep -E 'ROLE|self-provisioner' 
+   92  oc describe clusterrolebindings self-provisioners 
+   93  oc adm policy remove-cluster-role-from-group self-provisioner system:authenticated:oauth
+   94  oc describe clusterrolebindings self-provisioners 
+   95  oc describe clusterrolebindings -o wide  self-provisioners 
+   96  oc describe clusterrolebindings -o wide  | grep -E "ROLE|self-provisioner' 
+   97  oc describe clusterrolebindings -o wide  | grep -E 'ROLE|self-provisioner' 
+   98  oc get clusterrolebinding -o wide  | grep -E 'ROLE|self-provisioner' 
+   99  oc login -u leader -p rdhat 
+  100  vim htpasswd 
+  101  htpasswd -b htpasswd leader redhat
+  102  oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config
+  103  oc create secret generic localusers --from-file htpasswd=htpasswd -n openshift-config 
+  104  oc get pods -n openshift-authentication
+  105  watch -d oc get pods -n openshift-authentication
+  106  oc edit oauth
+  107  watch -d oc get pods -n openshift-authentication
+  108  oc login -u leader -p rdhat 
+  109  cat htpasswd 
+  110  vim htpasswd 
+  111  oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config
+  112  watch -d oc get pods -n openshift-authentication
+  113  oc login -u leader -p rdhat 
+  114  oc login -u leader -p redhat 
+  115  oc login -u leader -p rdhat 
+  116  oc login -u leader -p redhat 
+  117  oc extract secret/localusers -n openshift-config --to /tmp/ 
+  118  oc extract secret/localusers -n openshift-config --to /tmp/ --confirm
+  119  cat /tmp/htpasswd 
+  120  cat htpasswd 
+  121  vim htpasswd 
+  122  htpasswd -D new_developer htpasswd
+  123  htpasswd -D htpasswd new_developer
+  124  htpasswd -D htpasswd new_adin
+  125  htpasswd -D htpasswd new_admin
+  126  cat htpasswd 
+  127  oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config
+  128  watch -d oc get pods -n openshift-authentication
+  129  oc login -u leader -p redhat 
+  130  oc new-project test 
+  131  oc login -u admin -p redhatocp 
+  132  oc new-project auth-rbac 
+  133  oc policy add-role-to-user admin leader 
+  134  oc adm groups new dev-group
+  135  oc adm groups add-users dev-group developer 
+  136  oc adm groups new qa-group
+  137  htpasswd -b htpasswd qa-engineer redhat
+  138  oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config
+  139  oc adm groups add-users qa-group qa-engineer
+  140  oc get groups 
+  141  oc login -u leader -p redhat 
+  142  oc policy add-role-to-group edit dev-group
+  143  oc policy add-role-to-group view qa-group
+  144  oc get rolebindings -o wide | grep -v '^system:'
+  145  oc login -u developer -p developer
+  146  oc new-app --name httpd httpd:2.4 
+  147  oc policy add-role-to-user edit qa-engineer 
+  148  oc login -u qa-engineer -p redhat 
+  149  oc scale deployment httpd --replicas 3
+  150  oc login -u admin -p redhatocp 
+  151  oc adm policy add-cluster-role-to-group --rolebinding-name self-provisioners self-provisioner system:authenticated:oauth
+  152  oc login -u developer -p developer 
+  153  oc new-project network-ingress
+  154  podman search registry.ocp4.example.com:8443/todo-angular
+  155  podman search todo-angular
+  156  podman pull registry.ocp4.example.com:8443/redhattraining/todo-angular:v1.1.
+  157  podman pull registry.ocp4.example.com:8443/redhattraining/todo-angular:v1.1
+  158  oc new-app --name todo-http --image=quay.io/redhattraining/todo-angular:v1.1 
+  159  oc get pods 
+  160  oc get all
+  161  oc get pods 
+  162  oc get pods -w
+  163  oc get route 
+  164  oc expose svc todo-http --hostname todo-http.apps.ocp4.example.com 
+  165  oc get route 
+  166  firefox http://todo-http.apps.ocp4.example.com & 
+  167  ip a | grep 172.25.250.9 
+  168  sudo tcpdump -i eth0 -A -n port 80 | grep "angular"
+  169  sudo tcpdump -i eth0 -A -n port 80 | grep "angular" | grep script
+  170  oc create route edge todo-https --service todo-http --hostname todo-https.apps.ocp4.example.com 
+  171  oc get route 
+  172  firefox https://todo-https.apps.ocp4.example.com & 
+  173  curl -I -v https://todo-https.apps.ocp4.example.com
+  174  oc get svc 
+  175  oc debug -t deployment/todo-http --image registry.ocp4.example.com:8443/ubi8/ubi:8.4
+  176  oc project 
+  177  oc get all
+  178  oc delete route todo-https
+  179  openssl genrsa -out training.key 4096
+  180  openssl req -new -key training.key -out training.csr -subj "/C=US/ST=North Carolina/L=Raleigh/O=Red Hat/CN=todo-https.apps.ocp4.example.com"
+  181  openssl x509 -req -in training.csr -out training.crt -days 1825
+  182  openssl x509 -req -in training.csr -out training.crt -days 1825 -key training.key 
+  183  ls
+  184  oc create secret tls todo-certs --cert training.crt --key training.key 
+  185  oc new-app --name todo-http --image=quay.io/redhattraining/todo-angular:v1.2 --dry-run=client -o yaml > todo-app-v2.yaml
+  186  oc get all 
+  187  oc create deployment todo-https --image=quay.io/redhattraining/todo-angular:v1.2 
+  188  oc get pods 
+  189  oc get deploy
+  190  oc delete deploy todo-https
+  191  oc create deployment todo-https --image=quay.io/redhattraining/todo-angular:v1.2 --dry-run=client -o yaml > todo-https.yaml 
+  192  vim todo-https.yaml
+  193  oc apply -f todo-https.yaml --save-config 
+  194  oc create -f todo-https.yaml --save-config 
+  195  oc get deploy
+  196  oc get pods 
+  197  oc describe deployment/todo-https 
+  198  oc exec -it deployment/todo-https bash
+  199  oc expose deployment/todo-https --port=8443 --protocol=TCP 
+  200  oc set volumes deployment/todo-https 
+  201  oc create route passthrough todo-https --service todo-https --port 8443 --hostname todo-https.apps.ocp4.example.com 
+  202  curl -vv -I https://todo-https.apps.ocp4.example.com 
+  203  curl -vv -I https://todo-https.apps.ocp4.example.com --cacert training.crt 
+  204  oc get svc 
+  205  oc debug -t deployment/todo-http --image registry.ocp4.example.com:8443/ubi8/ubi:8.4
+  206  oc debug -t deployment/todo-https --image registry.ocp4.example.com:8443/ubi8/ubi:8.4
+  207  oc delete project network-ingress 
+  208  oc login -u developer -p developer https://api.ocp4.example.com:6443
+  209  oc new-project network-policy 
+  210  oc new-app --name hello --image quay.io/redhattraining/hello-world-nginx:v1.0 
+  211  oc new-app --name test --image quay.io/redhattraining/hello-world-nginx:v1.0 
+  212  oc expose svc hello 
+  213  oc get route 
+  214  oc get pods -o wide 
+  215  oc get pods -o wide -o custom-columns="POD_NAME:.metadata.name,IP_ADDRESS:.status.ip"
+  216  oc get pods -o wide -o yaml 
+  217  oc get pods -o wide -o custom-columns="POD_NAME:.metadata.name,IP_ADDRESS:.status.PODIP"
+  218  oc get pods -o wide -o yaml 
+  219  oc get pods -o wide -o custom-columns="POD_NAME:.metadata.name,IP_ADDRESS:.status.podIP"
+  220  oc get pods -o wide 
+  221  oc get pods -o wide -o custom-columns="POD_NAME:.metadata.name,IP_ADDRESS:.status.podIP"
+  222  oc get svc 
+  223  oc get svc -o custom-columns="SERVICE_NAME:.metadata.name,CLUSTER-IP:.spec.clusterIP"
+  224  oc get route 
+  225  oc get route -o custom-columns="NAME:.metadata.name,HOSTNAME:.spec.host,PORT:.spec.port"
+  226  oc get route -o custom-columns="NAME:.metadata.name,HOSTNAME:.spec.host,PORT:.spec.port.targetPort"
+  227  oc rsh test-85979bd4d5-ztwjq curl 10.8.0.127:8080 | grep Hello 
+  228  oc rsh test-85979bd4d5-ztwjq curl 172.30.146.46:8080 | grep Hello 
+  229  curl -s hello-network-policy.apps.ocp4.example.com | grep Hello 
+  230  oc new-project different-namespaces
+  231  oc new-app --name sample-app --image quay.io/redhattraining/hello-world-nginx:v1.0 
+  232  oc get pods -o wide 
+  233  oc get pods -o wide -o custom-columns="NAME:.metadata.name"
+  234  oc rsh sample-app-7cdc55ccf7-ccbbs curl 10.8.0.127:8080 | grep Hello 
+  235  oc rsh sample-app-7cdc55ccf7-ccbbs curl 10.8.0.128:8080 | grep Hello 
+  236  oc project network-policy 
+  237  vim deny-all.yaml 
+  238  oc create -f deny-all.yaml
+  239  oc rsh test-85979bd4d5-ztwjq curl 10.8.0.127:8080 | grep Hello
+  240  oc project different-namespaces 
+  241  oc rsh sample-app-7cdc55ccf7-ccbbs curl 10.8.0.127:8080 | grep Hello
+  242  cp deny-all.yaml allow-specific.yaml 
+  243  vim allow-specific.yaml
+  244  oc create -f allow-specific.yaml
+  245  oc delete -f allow-specific.yaml 
+  246  oc get networkpolicy 
+  247  oc create -n network-policy -f allow-specific.yaml 
+  248  oc get networkpolicies -n network-policy 
+  249  oc login -u admin -p redhatocp 
+  250  oc label ns different-namespaces network=different-namespace
+  251  oc describe ns different-namespaces 
+  252  oc login -u developer -p developer 
+  253  oc rsh sample-app-7cdc55ccf7-ccbbs curl 10.8.0.127:8080 | grep Hello
+  254  oc rsh sample-app-7cdc55ccf7-ccbbs curl 10.8.0.127:8181 | grep Hello
+  255  oc rsh sample-app-7cdc55ccf7-ccbbs curl 10.8.0.128:8080 | grep Hello
+  256  curl -s hello-network-policy.apps.ocp4.example.com
+  257  cp allow-specific.yaml allow-from-openshift-ingress.yaml
+  258  vim allow-from-openshift-ingress.yaml
+  259  oc create -f allow-from-openshift-ingress.yaml -n network-policy 
+  260  oc get networkpolicy -n network-policy 
+  261  cat allow-from-openshift-ingress.yaml 
+  262  oc login -u admin -p redhatocp 
+  263  oc whoami 
+  264  curl -s hello-network-policy.apps.ocp4.example.com | grep Hello 
+  265  oc new-project network-svccerts
+  266  oc annotate service server service.beta.openshift.io/serving-cert-secret-name=server-secret
+  267  history 
+  268  vim .bash_history
+  269  reboot 
+  270  history 
+  271  ls
+  272  git
+  273  git clone https://github.com/sanjurajrh/geojit
+  274  ls
+  275  rsync allow-from-openshift-ingress.yaml allow-specific.yaml deny-all.yaml htpasswd oauth.yaml todo-app-v2.yaml todo-https.yaml geojit/
+  276  history > hst.txt

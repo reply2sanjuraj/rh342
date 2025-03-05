@@ -1,0 +1,270 @@
+oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+oc whoami 
+oc get oauth 
+oc get oauth/cluster -o yaml  
+htpasswd -c -B -b htpasswd new_admin redhat 
+cat htpasswd 
+htpasswd -c -B -b htpasswd new_developer developer
+cat htpasswd 
+htpasswd -c -B -b htpasswd new_admin redhat 
+htpasswd -b htpasswd new_developer developer
+cat htpasswd 
+oc create secret generic localusers --from-file htpasswd=htpasswd -n openshift-config 
+oc adm policy add-cluster-role-to-user cluster-admin new-admin 
+oc get oauth/cluster -o yaml > oauth.yaml
+vim oauth.yaml
+oc replace -f oauth.yaml
+vim oauth.yaml
+oc replace -f oauth.yaml
+oc get pods -n openshift-authentication
+watch -d oc get pods -n openshift-authentication
+oc get oauth/cluster -o yaml 
+oc get pods -n openshift-authentication
+oc edit oauth/cluster
+oc get secret -n openshift-con
+oc get secret -n openshift-config
+oc get pods -n openshift-authentication
+oc edit oauth/cluster
+oc get pods -n openshift-authentication
+watch -d oc get pods -n openshift-authentication
+oc get pods -n openshift-authentication
+oc edit oauth/cluster
+oc get pods -n openshift-authentication
+watch -d oc get pods -n openshift-authentication
+oc login -u new_admin -p redhat
+oc get nodes 
+oc adm policy add-cluster-role-to-user cluster-admin new_admin 
+oc login -u admin -p redhatocp 
+oc adm policy add-cluster-role-to-user cluster-admin new_admin 
+oc login -u new_admin -p redhat
+oc get nodes 
+oc login -u new_developer -p developer 
+oc get nodes
+oc login -u new_admin -p redhat
+oc get users
+oc get identities.user.openshift.io 
+oc extract secret/localusers -n openshift-config --to . --confirm 
+cat htpasswd 
+htpasswd  -b htpasswd manager redhat 
+cat htpasswd 
+oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config
+watch oc get all -n openshift-authentication
+oc login -u manager -p redhat 
+oc new-project auth-providers
+oc login -u new_developer -p developer 
+oc delete project auth-providers
+oc login -u new_admin -p redhat 
+oc extract secret/localusers -n openshift-config --to . --confirm 
+cat htpasswd 
+MANAGER_PASSWD="$(openssl rand -hex 15)"
+htpasswd -b htpasswd manager ${MANAGER_PASSWD}
+cat htpasswd 
+oc set data secret/loccalusers --from-file htpasswd=htpasswd -n openshift-config 
+oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config 
+watch oc get all -n openshift-authentication
+oc login -u manager -p ${MANAGER_PASSWD}
+oc login -u new_admin -p redhat 
+oc extract secret/localusers -n openshift-config --to . --confirm 
+cat htpasswd 
+htpasswd -D htpasswd manager 
+cat htpasswd 
+oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config
+watch -d oc get pods -n openshift-authentication
+oc login -u manager -p ${MANAGER_PASSWD}
+oc login -u new_admin -p redhat
+oc delete identities.user.openshift.io "myusers:manager"
+oc delete user manager
+oc get users 
+oc get identity
+oc extract secret/localusers -n openshift-config --to . 
+oc extract secret/localusers -n openshift-config --to /tmp/ 
+cat /tmp/htpasswd 
+oc login -u admin -p redhatocp 
+oc delete project auth-providers 
+oc edit oauth
+watch -d oc get pods -n openshift-authentication
+oc get pods -n openshift-authentication
+oc delete secret/localusers -n openshift-config
+oc delete identities.user.openshift.io --all
+oc delete user --all
+oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+oc get clusterrolebinding -o wide | grep -E 'ROLE|self-provisioner' 
+oc describe clusterrolebindings self-provisioners 
+oc adm policy remove-cluster-role-from-group self-provisioner system:authenticated:oauth
+oc describe clusterrolebindings self-provisioners 
+oc describe clusterrolebindings -o wide  self-provisioners 
+oc describe clusterrolebindings -o wide  | grep -E "ROLE|self-provisioner' 
+
+oc describe clusterrolebindings -o wide  | grep -E 'ROLE|self-provisioner' 
+oc get clusterrolebinding -o wide  | grep -E 'ROLE|self-provisioner' 
+oc login -u leader -p rdhat 
+vim htpasswd 
+htpasswd -b htpasswd leader redhat
+oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config
+oc create secret generic localusers --from-file htpasswd=htpasswd -n openshift-config 
+oc get pods -n openshift-authentication
+watch -d oc get pods -n openshift-authentication
+oc edit oauth
+watch -d oc get pods -n openshift-authentication
+oc login -u leader -p rdhat 
+cat htpasswd 
+vim htpasswd 
+oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config
+watch -d oc get pods -n openshift-authentication
+oc login -u leader -p rdhat 
+oc login -u leader -p redhat 
+oc login -u leader -p rdhat 
+oc login -u leader -p redhat 
+oc extract secret/localusers -n openshift-config --to /tmp/ 
+oc extract secret/localusers -n openshift-config --to /tmp/ --confirm
+cat /tmp/htpasswd 
+cat htpasswd 
+vim htpasswd 
+htpasswd -D new_developer htpasswd
+htpasswd -D htpasswd new_developer
+htpasswd -D htpasswd new_adin
+htpasswd -D htpasswd new_admin
+cat htpasswd 
+oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config
+watch -d oc get pods -n openshift-authentication
+oc login -u leader -p redhat 
+oc new-project test 
+oc login -u admin -p redhatocp 
+oc new-project auth-rbac 
+oc policy add-role-to-user admin leader 
+oc adm groups new dev-group
+oc adm groups add-users dev-group developer 
+oc adm groups new qa-group
+htpasswd -b htpasswd qa-engineer redhat
+oc set data secret/localusers --from-file htpasswd=htpasswd -n openshift-config
+oc adm groups add-users qa-group qa-engineer
+oc get groups 
+oc login -u leader -p redhat 
+oc policy add-role-to-group edit dev-group
+oc policy add-role-to-group view qa-group
+oc get rolebindings -o wide | grep -v '^system:'
+oc login -u developer -p developer
+oc new-app --name httpd httpd:2.4 
+oc policy add-role-to-user edit qa-engineer 
+oc login -u qa-engineer -p redhat 
+oc scale deployment httpd --replicas 3
+oc login -u admin -p redhatocp 
+oc adm policy add-cluster-role-to-group --rolebinding-name self-provisioners self-provisioner system:authenticated:oauth
+oc login -u developer -p developer 
+oc new-project network-ingress
+podman search registry.ocp4.example.com:8443/todo-angular
+podman search todo-angular
+podman pull registry.ocp4.example.com:8443/redhattraining/todo-angular:v1.1.
+podman pull registry.ocp4.example.com:8443/redhattraining/todo-angular:v1.1
+oc new-app --name todo-http --image=quay.io/redhattraining/todo-angular:v1.1 
+oc get pods 
+oc get all
+oc get pods 
+oc get pods -w
+oc get route 
+oc expose svc todo-http --hostname todo-http.apps.ocp4.example.com 
+oc get route 
+firefox http://todo-http.apps.ocp4.example.com & 
+ip a | grep 172.25.250.9 
+sudo tcpdump -i eth0 -A -n port 80 | grep "angular"
+sudo tcpdump -i eth0 -A -n port 80 | grep "angular" | grep script
+oc create route edge todo-https --service todo-http --hostname todo-https.apps.ocp4.example.com 
+oc get route 
+firefox https://todo-https.apps.ocp4.example.com & 
+curl -I -v https://todo-https.apps.ocp4.example.com
+oc get svc 
+oc debug -t deployment/todo-http --image registry.ocp4.example.com:8443/ubi8/ubi:8.4
+oc project 
+oc get all
+oc delete route todo-https
+openssl genrsa -out training.key 4096
+openssl req -new -key training.key -out training.csr -subj "/C=US/ST=North Carolina/L=Raleigh/O=Red Hat/CN=todo-https.apps.ocp4.example.com"
+openssl x509 -req -in training.csr -out training.crt -days 1825
+openssl x509 -req -in training.csr -out training.crt -days 1825 -key training.key 
+ls
+oc create secret tls todo-certs --cert training.crt --key training.key 
+oc new-app --name todo-http --image=quay.io/redhattraining/todo-angular:v1.2 --dry-run=client -o yaml > todo-app-v2.yaml
+oc get all 
+oc create deployment todo-https --image=quay.io/redhattraining/todo-angular:v1.2 
+oc get pods 
+oc get deploy
+oc delete deploy todo-https
+oc create deployment todo-https --image=quay.io/redhattraining/todo-angular:v1.2 --dry-run=client -o yaml > todo-https.yaml 
+vim todo-https.yaml
+oc apply -f todo-https.yaml --save-config 
+oc create -f todo-https.yaml --save-config 
+oc get deploy
+oc get pods 
+oc describe deployment/todo-https 
+oc exec -it deployment/todo-https bash
+oc expose deployment/todo-https --port=8443 --protocol=TCP 
+oc set volumes deployment/todo-https 
+oc create route passthrough todo-https --service todo-https --port 8443 --hostname todo-https.apps.ocp4.example.com 
+curl -vv -I https://todo-https.apps.ocp4.example.com 
+curl -vv -I https://todo-https.apps.ocp4.example.com --cacert training.crt 
+oc get svc 
+oc debug -t deployment/todo-http --image registry.ocp4.example.com:8443/ubi8/ubi:8.4
+oc debug -t deployment/todo-https --image registry.ocp4.example.com:8443/ubi8/ubi:8.4
+oc delete project network-ingress 
+oc login -u developer -p developer https://api.ocp4.example.com:6443
+oc new-project network-policy 
+oc new-app --name hello --image quay.io/redhattraining/hello-world-nginx:v1.0 
+oc new-app --name test --image quay.io/redhattraining/hello-world-nginx:v1.0 
+oc expose svc hello 
+oc get route 
+oc get pods -o wide 
+oc get pods -o wide -o custom-columns="POD_NAME:.metadata.name,IP_ADDRESS:.status.ip"
+oc get pods -o wide -o yaml 
+oc get pods -o wide -o custom-columns="POD_NAME:.metadata.name,IP_ADDRESS:.status.PODIP"
+oc get pods -o wide -o yaml 
+oc get pods -o wide -o custom-columns="POD_NAME:.metadata.name,IP_ADDRESS:.status.podIP"
+oc get pods -o wide 
+oc get pods -o wide -o custom-columns="POD_NAME:.metadata.name,IP_ADDRESS:.status.podIP"
+oc get svc 
+oc get svc -o custom-columns="SERVICE_NAME:.metadata.name,CLUSTER-IP:.spec.clusterIP"
+oc get route 
+oc get route -o custom-columns="NAME:.metadata.name,HOSTNAME:.spec.host,PORT:.spec.port"
+oc get route -o custom-columns="NAME:.metadata.name,HOSTNAME:.spec.host,PORT:.spec.port.targetPort"
+oc rsh test-85979bd4d5-ztwjq curl 10.8.0.127:8080 | grep Hello 
+oc rsh test-85979bd4d5-ztwjq curl 172.30.146.46:8080 | grep Hello 
+curl -s hello-network-policy.apps.ocp4.example.com | grep Hello 
+oc new-project different-namespaces
+oc new-app --name sample-app --image quay.io/redhattraining/hello-world-nginx:v1.0 
+oc get pods -o wide 
+oc get pods -o wide -o custom-columns="NAME:.metadata.name"
+oc rsh sample-app-7cdc55ccf7-ccbbs curl 10.8.0.127:8080 | grep Hello 
+oc rsh sample-app-7cdc55ccf7-ccbbs curl 10.8.0.128:8080 | grep Hello 
+oc project network-policy 
+vim deny-all.yaml 
+oc create -f deny-all.yaml
+oc rsh test-85979bd4d5-ztwjq curl 10.8.0.127:8080 | grep Hello
+oc project different-namespaces 
+oc rsh sample-app-7cdc55ccf7-ccbbs curl 10.8.0.127:8080 | grep Hello
+cp deny-all.yaml allow-specific.yaml 
+vim allow-specific.yaml
+oc create -f allow-specific.yaml
+oc delete -f allow-specific.yaml 
+oc get networkpolicy 
+oc create -n network-policy -f allow-specific.yaml 
+oc get networkpolicies -n network-policy 
+oc login -u admin -p redhatocp 
+oc label ns different-namespaces network=different-namespace
+oc describe ns different-namespaces 
+oc login -u developer -p developer 
+oc rsh sample-app-7cdc55ccf7-ccbbs curl 10.8.0.127:8080 | grep Hello
+oc rsh sample-app-7cdc55ccf7-ccbbs curl 10.8.0.127:8181 | grep Hello
+oc rsh sample-app-7cdc55ccf7-ccbbs curl 10.8.0.128:8080 | grep Hello
+curl -s hello-network-policy.apps.ocp4.example.com
+cp allow-specific.yaml allow-from-openshift-ingress.yaml
+vim allow-from-openshift-ingress.yaml
+oc create -f allow-from-openshift-ingress.yaml -n network-policy 
+oc get networkpolicy -n network-policy 
+cat allow-from-openshift-ingress.yaml 
+oc login -u admin -p redhatocp 
+oc whoami 
+curl -s hello-network-policy.apps.ocp4.example.com | grep Hello 
+oc new-project network-svccerts
+oc annotate service server service.beta.openshift.io/serving-cert-secret-name=server-secret
+history 
+vim .bash_history
+reboot 

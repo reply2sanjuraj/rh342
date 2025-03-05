@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: todo-https
+  name: todo-https
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-https
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: todo-https
+    spec:
+      containers:
+      - image: quay.io/redhattraining/todo-angular:v1.2
+        name: todo-angular
+        resources: {}
+        volumeMounts: 
+        - name: tls-certs
+          readOnly: true
+          mountPath: /usr/local/etc/ssl/certs
+      volumes:
+      - name: tls-certs
+        secret:
+          secretName: todo-certs
+status: {}
