@@ -1,0 +1,105 @@
+    1  ssh lab@utility
+    2  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+    3  oc whoami --show-console 
+    4  oc get nodes 
+    5  oc get nodes --show-labels
+    6  oc get nodes -l node-role.kubernetes.io/worker=
+    7  # oc label nodes -l node-role.kubernetes.io/worker= cluster.ocs.openshift.io/openshift-storage=
+    8  oc get nodes -l node-role.kubernetes.io/infra=
+    9  oc label nodes -l node-role.kubernetes.io/worker= cluster.ocs.openshift.io/openshift-storage=
+   10  oc get nodes -l cluster.ocs.openshift.io/openshift-storage=
+   11  oc describe ns openshift-storage 
+   12  oc label ns openshift-storage openshift.io/cluster-monitoring="true"
+   13  oc describe ns openshift-storage 
+   14  oc get storagecluster,pods -n openshift-storager 
+   15  oc get storagecluster,pods -n openshift-storage
+   16  watch -d oc get storagecluster,pods -n openshift-storage
+   17  oc get storageclass
+   18  vim obc-registry.yaml
+   19  oc apply -f obc-registry.yaml 
+   20  oc get obc -n openshift-storage 
+   21  oc project openshift-storage 
+   22  oc describe obc noobaa-registry 
+   23  oc extract cm/noobaa-registry --to=- 
+   24  oc extract secret/noobaa-registry --to=- 
+   25  # oc create secret generic image-registry-private-configuration-user --from-literal=REGISTRY_STORAGE_S3_ACCESSKEY=${AWS_ACCESS_KEY_ID} --from-literal=REGISTRY_STORAGE_S3_SECRETKEY=${AWS_SECRET_ACCESS_KEY} --namespace openshift-image-registry
+   26  ls
+   27  oc extract secret/noobaa-registry --to=- . 
+   28  oc extract secret/noobaa-registry --to=. --confirm 
+   29  ls
+   30  oc create secret generic image-registry-private-configuration-user --from-literal=REGISTRY_STORAGE_S3_ACCESSKEY="$(cat AWS_ACCESS_KEY_ID)" --from-literal=REGISTRY_STORAGE_S3_SECRETKEY="$(cat AWS_SECRET_ACCESS_KEY)" --namespace openshift-image-registry
+   31  oc get route s3 -n openshift-storage 
+   32  oc get configs.imageregistry.operator.openshift.io 
+   33  oc edit configs.imageregistry.operator.openshift.io/cluster
+   34  oc get pods -n openshift-image-registry -l docker-registry=default 
+   35  watch -d oc get pods -n openshift-image-registry -l docker-registry=default 
+   36  oc get storageclasss
+   37  oc get storageclass
+   38  oc get statefulsets -n openshift-monitoring 
+   39  oc exec -n openshift-monitoring statefulsets/prometheus-k8s -c prometheus -- df -h /prometheus
+   40  oc exec -n openshift-monitoring statefulsets/alertmanager-main -c alertmanager -- df -h /alertmanager 
+   41  vim metrcis-storage.yaml
+   42  oc create -n openshift-monitoring configmap cluster-monitoring-config --from-file=config.yaml=metrcis-storage.yaml 
+   43  oc get statefulset -n openshift-monitoring 
+   44  watch -d oc get statefulset -n openshift-monitoring 
+   45  oc exec -n openshift-monitoring statefulsets/alertmanager-main -c alertmanager -- df -h /alertmanager 
+   46  oc exec -n openshift-monitoring statefulsets/prometheus-k8s -c prometheus -- df -h /prometheus
+   47  ls
+   48  cp obc-registry.yaml obc-logging.yaml
+   49  vim obc-logging.yaml
+   50  oc apply -f obc-logging.yaml 
+   51  oc prohect openshift-logging 
+   52  oc project openshift-logging 
+   53  oc get obc 
+   54  oc describe obc/loki-bucket-odf 
+   55  oc extract cm/loki-bucket-odf 
+   56  oc get obc 
+   57  oc extract cm/loki-bucket-odf --to=- 
+   58  oc extract secret/loki-bucket-odf --to=- 
+   59  vim secret.yaml
+   60  oc apply -f secret.yaml 
+   61  vim lokistack.yaml
+   62  oc apply -f lokistack.yaml 
+   63  oc get pods -n openshift-logging 
+   64  watch -d oc get pods -n openshift-logging 
+   65  vim lokistack.yaml
+   66  oc apply -f lokistack.yaml 
+   67  watch -d oc get pods -n openshift-logging 
+   68  vim clusterlogging.yaml
+   69  oc explain clusterlogging.spec
+   70  oc explain clusterlogging.spec.managementState
+   71  vim clusterlogging.yaml
+   72  oc explain clusterlogging.spec.logStore
+   73  vim clusterlogging.yaml
+   74  oc explain clusterlogging.spec
+   75  vim clusterlogging.yaml
+   76  cat clusterlogging.yaml
+   77  vim clusterlogging.yaml
+   78  oc apply -f clusterlogging.yaml 
+   79  oc get pods -n openshift-logging 
+   80  watch -d oc get pods -n openshift-logging 
+   81  oc get pods -n openshift-logging 
+   82  vim clusterlogforwarder.yaml
+   83  cat clusterlogforwarder.yaml
+   84  oc explain ClusterLogForwarder
+   85  oc create -f clusterlogforwarder.yaml 
+   86  oc get pods -n openshift-logging 
+   87  watch -d oc get pods -n openshift-logging 
+   88  vim lifecyclebucket.xml
+   89  history 
+   90  oc extract cm/loki-bucket-odf --to=- 
+   91  oc extract secret/loki-bucket-odf --to=-
+   92  oc get route s3 -n openshift-storage 
+   93  s3cmd ls 
+   94  s3cmd getlifecycle s3://loki-bucket-odf-efb7c8d5-cc6e-47a0-8474-158413b88f2d
+   95  s3cmd setlifecycle lifecyclebucket.xml s3://loki-bucket-odf-efb7c8d5-cc6e-47a0-8474-158413b88f2d
+   96  vim lifecyclebucket.xml
+   97  s3cmd setlifecycle lifecyclebucket.xml s3://loki-bucket-odf-efb7c8d5-cc6e-47a0-8474-158413b88f2d
+   98  s3cmd getlifecycle s3://loki-bucket-odf-efb7c8d5-cc6e-47a0-8474-158413b88f2d
+   99  history 
+  100  git clone https://github.com/reply2sanjuraj/rh342.git 
+  101  ls rh342/
+  102  CD rh342/
+  103  cd rh342/
+  104  ls
+  105  history > ex370_history.txt
