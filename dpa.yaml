@@ -1,0 +1,33 @@
+apiVersion: oadp.openshift.io/v1alpha1
+kind: DataProtectionApplication
+metadata:
+  name: oadp-backup
+  namespace: openshift-adp
+spec:
+  configuration:
+    nodeAgent:
+      enable: true
+      uploaderType: kopia
+    velero:
+      defaultPlugins:
+        - aws
+        - openshift
+        - csi
+      defaultSnapshotMoveData: true 
+  backupLocations:
+    - velero:
+        config:
+          profile: "default"
+          region: "us-east-1"
+          s3Url: https://s3.openshift-storage.svc 
+          s3ForcePathStyle: "true"
+          insecureSkipTLSVerify: "true"
+        provider: aws
+        default: true
+        credential:
+          key: cloud
+          name:  cloud-credentials
+        objectStorage:
+          bucket: backup-5d991bbc-5e37-484f-a9bf-ac34ee012e58
+          prefix: oadp
+          caCert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURVVENDQWptZ0F3SUJBZ0lJUnM2Mm81RzdyMDB3RFFZSktvWklodmNOQVFFTEJRQXdOakUwTURJR0ExVUUKQXd3cmIzQmxibk5vYVdaMExYTmxjblpwWTJVdGMyVnlkbWx1WnkxemFXZHVaWEpBTVRjek1EVTJNRFV6TnpBZQpGdzB5TkRFeE1ESXhOVEUxTXpaYUZ3MHlOekF4TURFeE5URTFNemRhTURZeE5EQXlCZ05WQkFNTUsyOXdaVzV6CmFHbG1kQzF6WlhKMmFXTmxMWE5sY25acGJtY3RjMmxuYm1WeVFERTNNekExTmpBMU16Y3dnZ0VpTUEwR0NTcUcKU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLQW9JQkFRQzB2dThtaEgxU2g0SGV1WjNoMmMwQkRhR2RLd2MzcklhOQpDdUpOYlE0VmZLMTljWEpWdk0xS0R3dlkzWWlLZ0xMMUVuem9HK0treXFtVDhhTlpocHZoUmo5VVQyL3hrOUpCCld0dkI5YnJqdWpqODVqVVZ0djVRZWZRSjZha3orSGQzMG1aRU9xa09QOUR0Ui9aZWpuYW82NWZaam9WcnVheGMKdVkrSnE2V0VXTitmbEg0emhGYkhlQmVzT2lhS3FXOTdNVEhQQ01ZVkgxYW1WKzl0UUZORi9ONG1USkhVdUl6RwpqbU53UWdSb0cveXVGUjlWM3BxN1lTUWo2bkFLeWdrVUszTUdQcnZLd014ZU5UckNCeDArOEh3aHdxMmdNMjQ0CmQ3VEJ5T0VLQ21wQzMwWURPbWxnci9BR01sUjc0dzk1NVcyMzRlcVRyN2RtM1oyOXZ5Y2xBZ01CQUFHall6QmgKTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQjBHQTFVZERnUVdCQlR3dnZJQQpnTVp3TUViTkNZZzcyNDhtY0ZCdDhEQWZCZ05WSFNNRUdEQVdnQlR3dnZJQWdNWndNRWJOQ1lnNzI0OG1jRkJ0CjhEQU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FRRUFCbVhlaDVmOUlLNVNtQWhnOFlwRFBKVXo3TUhOc01KZ3dEMUcKcGZJeU5JbnI5K05JSHJwbXRRWHFmenF5UHhxVHhaTmh1ekZ4S0hsTmJ4aFJ6RDdGSG9kcjFOYlAzcUxNYWFvdQptU1V4UHgxcDduYjhuRDBqUFAvVGhIbm5lbVRVakFsZWZlSXk2M1I4RTZDbko2ZVJJM3E2eHFaUzhLU0FJRHlUClRHejR4cy82OUg3OGpHSnBZT2tyUFlwRmFFbVd4Y3B2R2JJekg1QWtScURkeC9OdHdPY2F6MUdNZkdzMzE3ZTcKYmpuRW02YzNZaXZsSkpJczZjaXBsdXhjalp3NTJDVmUvL2ZNbVNUeWRleXB5VzNUcXUvYUFEQm5mNlRDQ2plbQpOSmJaWWFaV3piR25SSEFIZi8yd3R1N3A0VmlHa3FiTWR5bnJ2dVBuYjdzNjdrZVMwdz09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
