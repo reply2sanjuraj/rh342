@@ -1,0 +1,8 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: loki-bucket-odf
+  namespace: openshift-logging
+spec:
+  storageClassName: openshift-storage.noobaa.io
+  generateBucketName: loki-bucket-odf
